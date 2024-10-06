@@ -1,5 +1,5 @@
 // Lee el archivo CSV
-fetch('datos/vis_2022.csv')
+fetch('datos/data_filtrada.csv')
     .then(response => response.text())
     .then(csvText => {
         // Convierte el texto CSV en un array de objetos
@@ -7,9 +7,9 @@ fetch('datos/vis_2022.csv')
         const birdData = rows.map(row => {
             const columns = row.split(',');
             return {
-                lat: parseFloat(columns[7]),  // Columna 'lat'
-                lng: parseFloat(columns[8]),  // Columna 'lng'
-                species: columns[1]  // Columna 'comName' (nombre común del pájaro)
+                lat: parseFloat(columns[8]),  // Columna 'lat'
+                lng: parseFloat(columns[9]),  // Columna 'lng'
+                species: columns[2]  // Columna 'comName' (nombre común del pájaro)
             };
         });
 
@@ -48,19 +48,21 @@ fetch('datos/vis_2022.csv')
         const layout = {
             geo: {
                 scope: 'south america',
+                projection: {
+                    type: 'natural earth', // Cambiar la proyección
+                },
                 showland: true,
                 landcolor: '#e5e5e5',
                 countrycolor: '#ffffff',
-                projection: {
-                    type: 'mercator', // Puedes usar otra proyección si lo deseas
-                }
+                visible: true
             },
             width: 600,
             height: 800,
             margin: { l: 0, r: 0, b: 0, t: 0, pad: 0 },
             dragmode: false
         };
-
+        
         Plotly.newPlot('myMap', data, layout, { scrollZoom: false, displayModeBar: false });
+        
     });
 
