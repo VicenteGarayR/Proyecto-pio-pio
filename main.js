@@ -1,5 +1,5 @@
 // Lee el archivo CSV
-fetch('datos/data_filtrada.csv')
+fetch('datos/data_filtrada_8k_2022.csv')
     .then(response => response.text())
     .then(csvText => {
         // Convierte el texto CSV en un array de objetos
@@ -39,7 +39,7 @@ fetch('datos/data_filtrada.csv')
                 text: validData.map(d => d.species), // Mostrar el nombre del pájaro en el hover
                 marker: {
                     color: '#ff0000',
-                    size: 5,  // Tamaño del punto
+                    size: 2,  // Tamaño del punto
                     line: { color: 'black' }
                 },
             }
