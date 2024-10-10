@@ -48,13 +48,10 @@ fetch('datos/data_filtrada_8k_2022.csv')
         const layout = {
             geo: {
                 scope: 'south america',
-                projection: {
-                    type: 'natural earth', // Cambiar la proyección
-                },
-                showland: true,
-                landcolor: '#e5e5e5',
-                countrycolor: '#ffffff',
-                visible: true
+                showland: false,
+                countrywidth: 0,
+    			lonaxis: { range: [-64, -76] },
+	    		lataxis: { range: [-18, -59] }
             },
             width: 600,
             height: 800,
