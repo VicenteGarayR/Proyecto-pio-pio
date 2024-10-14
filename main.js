@@ -18,8 +18,10 @@ fetch('datos/data_filtrada_8k_2022.csv')
 
         const infoContainer = document.getElementById('infoContainer');
         infoContainer.innerHTML = `
-            <p><strong>Total de pájaros avistados:</strong> 34</p>
-            <p><strong>Región con más avistamientos:</strong> sexs avistamientos)</p>
+            <p><strong>Total de pájaros avistados:</strong> 199462</p>
+            <p><strong>Total de especies:</strong> 400</p>
+            <p><strong>Región con más avistamientos:</strong> Magallanes, 69906 avistamientos</p>
+            <p><strong>Región con más diversidad:</strong> Valparaiso, 198 especies</p>
         `;
 
         // Extrae latitudes y longitudes de los datos
