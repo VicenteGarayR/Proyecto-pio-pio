@@ -50,7 +50,7 @@ fetch('datos/data_filtrada_8k_2022.csv')
             <p><strong>Total de pájaros avistados:</strong> 34</p>
             <p><strong>Región con más avistamientos:</strong> sexs avistamientos)</p>
         `;
-document.body.prepend(infoContainer);
+        document.body.prepend(infoContainer);
 
         const layout = {
             geo: {
@@ -66,7 +66,7 @@ document.body.prepend(infoContainer);
             dragmode: false
         };
         
-        Plotly.newPlot('myMap', data, layout, { scrollZoom: false, displayModeBar: false });
+        Plotly.newPlot('myMap', data, layout, infoContainer, { scrollZoom: false, displayModeBar: false });
         
     });
 
