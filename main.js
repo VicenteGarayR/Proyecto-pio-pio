@@ -16,12 +16,11 @@ fetch('datos/data_filtrada_8k_2022.csv')
         // Filtra datos válidos (con latitud y longitud)
         const validData = birdData.filter(d => !isNaN(d.lat) && !isNaN(d.lng));
 
-        const infoContainer = document.createElement('div');
+        const infoContainer = document.getElementById('infoContainer');
         infoContainer.innerHTML = `
             <p><strong>Total de pájaros avistados:</strong> 34</p>
             <p><strong>Región con más avistamientos:</strong> sexs avistamientos)</p>
         `;
-        document.body.prepend(infoContainer);
 
         // Extrae latitudes y longitudes de los datos
         const latitudes = validData.map(d => d.lat);
