@@ -45,6 +45,13 @@ fetch('datos/data_filtrada_8k_2022.csv')
             }
         ];
 
+        const infoContainer = document.createElement('div');
+        infoContainer.innerHTML = `
+            <p><strong>Total de pájaros avistados:</strong> 34</p>
+            <p><strong>Región con más avistamientos:</strong> sexs avistamientos)</p>
+        `;
+document.body.prepend(infoContainer);
+
         const layout = {
             geo: {
                 scope: 'south america',
