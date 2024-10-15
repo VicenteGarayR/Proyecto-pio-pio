@@ -3,19 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa de Chile</title>
+    <title>Avistamientos de pájaros en Chile en 2022</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.plot.ly/plotly-2.34.0.min.js"></script>
     <script src="main.js" defer></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center; /* Centrar horizontalmente el contenedor */
+            align-items: flex-start; /* Alinear en la parte superior */
+            height: 100vh; /* Altura completa de la ventana */
+            margin: 0; /* Eliminar márgenes por defecto */
+        }
+        #container {
+            display: flex;
+            align-items: center; /* Centrar verticalmente el mapa y el texto */
+        }
+        #info {
+            text-align: left; /* Alinear el texto a la izquierda */
+            margin-left: 20px; /* Espacio entre el mapa y el texto */
+            font-size: 20px; /* Tamaño de fuente más grande */
+        }
+        h1 {
+            font-size: 45px; /* Ajustar tamaño del título */
+        }
+    </style>
 </head>
 <body>
-    <div id='title' >
-        <h1>Mapa de Chile</h1>
-    </div>   
-    <!-- Contenedor para etiquetas -->
-    <div id="infoContainer"></div>
-    <div id='myMap'></div>
-    <img id="context" src="map.svg" />
+    <div id='title'>
+        <h1>Avistamientos de aves en Chile en 2022</h1>
+    </div>
+
+    <div id="container">
+        <div id='myMap' aria-label="Mapa de avistamientos de pájaros en Chile" role="img"></div>
+        <div id="info">
+            <p>Se han avistado un total de 199462 aves</p>
+            <p>Llegando a visualizar 400 especies</p>
+            <p>En la región de Magallanes se avistaron 69906 aves</p>
+            <p>Siendo esta la mayor cantidad en una región <span style="display: inline-block; width: 20px; height: 20px; background-color: rgba(0, 0, 255, 0.3); border: 1px solid black;"></span></p>
+            <p>En cambio Valparaíso fue la región de mayor diversidad</p>
+            <p>Llegando a visualizar 198 especies <span style="display: inline-block; width: 20px; height: 20px; background-color: rgba(0, 128, 0, 0.3); border: 1px solid black;"></span></p>
+        </div>
+    </div>
+    
+    <label for="myMap" style="display: none;">Mapa de avistamientos</label>
 </body>
 </html>
 

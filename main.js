@@ -16,14 +16,6 @@ fetch('datos/data_filtrada_8k_2022.csv')
         // Filtra datos válidos (con latitud y longitud)
         const validData = birdData.filter(d => !isNaN(d.lat) && !isNaN(d.lng));
 
-        const infoContainer = document.getElementById('infoContainer');
-        infoContainer.innerHTML = `
-            <p><strong>Total de pájaros avistados: 199462</strong></p>
-            <p><strong>Total de especies: 400</strong></p>
-            <p><strong>Región con más avistamientos: Magallanes, 69906 avistamientos</strong></p>
-            <p><strong>Región con más diversidad: Valparaiso, 198 especies</strong></p>
-        `;
-
         // Extrae latitudes y longitudes de los datos
         const latitudes = validData.map(d => d.lat);
         const longitudes = validData.map(d => d.lng);
@@ -45,14 +37,42 @@ fetch('datos/data_filtrada_8k_2022.csv')
                 lat: latitudes,
                 hoverinfo: 'text',
                 text: validData.map(d => d.species), // Mostrar el nombre del pájaro en el hover
+                showlegend: false, // No mostrar la leyenda para este trazo
                 marker: {
                     color: '#ff0000',
                     size: 2,  // Tamaño del punto
                     line: { color: 'black' }
                 },
+            },
+            {
+                type: 'scattergeo',
+                mode: 'markers',
+                lon: [-70.91129],
+                lat: [-53.15483],
+                marker: {
+                    size: 80, // Tamaño del marcador
+                    color: 'blue', // Color del marcador
+                    opacity: 0.3, // Hacer el círculo transparente
+                    symbol: 'circle', // Forma del marcador
+                },
+                hoverinfo: 'none', // No mostrar información al pasar el mouse
+                showlegend: false // No mostrar la leyenda para este trazo
+            },
+            {
+                type: 'scattergeo',
+                mode: 'markers',
+                lon: [-71.62963],
+                lat: [-33.036],
+                marker: {
+                    size: 80, // Tamaño del marcador
+                    color: 'green', // Color del marcador
+                    opacity: 0.3, // Hacer el círculo transparente
+                    symbol: 'circle', // Forma del marcador
+                },
+                hoverinfo: 'none', // No mostrar información al pasar el mouse
+                showlegend: false // No mostrar la leyenda para este trazo
             }
         ];
-
 
         const layout = {
             geo: {
@@ -66,9 +86,11 @@ fetch('datos/data_filtrada_8k_2022.csv')
             height: 800,
             margin: { l: 0, r: 0, b: 0, t: 0, pad: 0 },
             dragmode: false
+
         };
         
         Plotly.newPlot('myMap', data, layout, { scrollZoom: false, displayModeBar: false });
         
     });
+
 
