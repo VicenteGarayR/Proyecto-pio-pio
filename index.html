@@ -10,22 +10,56 @@
     <style>
         body {
             display: flex;
-            justify-content: center; /* Centrar horizontalmente el contenedor */
-            align-items: flex-start; /* Alinear en la parte superior */
-            height: 100vh; /* Altura completa de la ventana */
-            margin: 0; /* Eliminar márgenes por defecto */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif; /* Fuente sin serifas */
         }
+
+        #title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Arial', sans-serif; /* Fuente sin serifas */
+        }
+
+        h1 {
+            font-size: 45px;
+            font-weight: 300;
+        }
+
         #container {
             display: flex;
-            align-items: center; /* Centrar verticalmente el mapa y el texto */
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
         }
+
+        #myMap {
+            width: 60%;
+            height: 600px;
+            border: 1px solid #ddd;
+        }
+
         #info {
-            text-align: left; /* Alinear el texto a la izquierda */
-            margin-left: 20px; /* Espacio entre el mapa y el texto */
-            font-size: 20px; /* Tamaño de fuente más grande */
+            text-align: left;
+            font-size: 18px;
+            margin-left: 20px;
         }
-        h1 {
-            font-size: 45px; /* Ajustar tamaño del título */
+
+        /* Estilos adicionales */
+        .info-box {
+            display: flex;
+            align-items: center;
+        }
+
+        .info-box span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -39,13 +73,18 @@
         <div id="info">
             <p>Se han avistado un total de 199462 aves</p>
             <p>Llegando a visualizar 400 especies</p>
-            <p>En la región de Magallanes se avistaron 69906 aves</p>
-            <p>Siendo esta la mayor cantidad en una región <span style="display: inline-block; width: 20px; height: 20px; background-color: rgba(0, 0, 255, 0.3); border: 1px solid black;"></span></p>
-            <p>En cambio Valparaíso fue la región de mayor diversidad</p>
-            <p>Llegando a visualizar 198 especies <span style="display: inline-block; width: 20px; height: 20px; background-color: rgba(0, 128, 0, 0.3); border: 1px solid black;"></span></p>
+            <div class="info-box">
+                <span style="background-color: rgba(0, 0, 255, 0.3); border: 1px solid black;"></span>
+                <p>En la región de Magallanes se avistaron 69906 aves</p>
+            </div>
+            <div class="info-box">
+                <span style="background-color: rgba(0, 128, 0, 0.3); border: 1px solid black;"></span>
+                <p>En cambio Valparaíso fue la región de mayor diversidad</p>
+            </div>
+            <p>Llegando a visualizar 198 especies</p>
         </div>
     </div>
-    
+
     <label for="myMap" style="display: none;">Mapa de avistamientos</label>
 </body>
 </html>

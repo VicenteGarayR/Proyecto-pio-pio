@@ -1,5 +1,5 @@
 // Lee el archivo CSV
-fetch('datos/data_filtrada_8k_2022.csv')
+fetch('datos/data_filtrada_8k.csv')
     .then(response => response.text())
     .then(csvText => {
         // Convierte el texto CSV en un array de objetos
@@ -39,39 +39,11 @@ fetch('datos/data_filtrada_8k_2022.csv')
                 text: validData.map(d => d.species), // Mostrar el nombre del pájaro en el hover
                 showlegend: false, // No mostrar la leyenda para este trazo
                 marker: {
-                    color: '#ff0000',
+                    color: '#555',
                     size: 2,  // Tamaño del punto
                     line: { color: 'black' }
                 },
             },
-            {
-                type: 'scattergeo',
-                mode: 'markers',
-                lon: [-70.91129],
-                lat: [-53.15483],
-                marker: {
-                    size: 80, // Tamaño del marcador
-                    color: 'blue', // Color del marcador
-                    opacity: 0.3, // Hacer el círculo transparente
-                    symbol: 'circle', // Forma del marcador
-                },
-                hoverinfo: 'none', // No mostrar información al pasar el mouse
-                showlegend: false // No mostrar la leyenda para este trazo
-            },
-            {
-                type: 'scattergeo',
-                mode: 'markers',
-                lon: [-71.62963],
-                lat: [-33.036],
-                marker: {
-                    size: 80, // Tamaño del marcador
-                    color: 'green', // Color del marcador
-                    opacity: 0.3, // Hacer el círculo transparente
-                    symbol: 'circle', // Forma del marcador
-                },
-                hoverinfo: 'none', // No mostrar información al pasar el mouse
-                showlegend: false // No mostrar la leyenda para este trazo
-            }
         ];
 
         const layout = {

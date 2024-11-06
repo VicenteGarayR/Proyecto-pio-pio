@@ -1,32 +1,31 @@
-* {
-    font-family: sans-serif;
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
-
-#context {
-    position: absolute;
-    pointer-events: none;
-    top: 85px;
-    left: 83px;
-    transition: 500ms ease all;
-}
-
-#myMap {
-    position: absolute;
-    width: 200px;
-    height: 800px;
-    border: 0px solid #333;
-    left: 30px;
-    top: 0px;
-}
-
 #title {
-    position: absolute;
-    left: 265px;
-    top: 20px;
+    text-align: center;
+    margin-bottom: 20px;
 }
-
 h1 {
-    font-size: 36px;
-    font-weight: 200;
-    color: #777;
+    font-size: 45px;
+    font-weight: 300;
+}
+#container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+}
+#myMap {
+    width: 60%;
+    height: 600px;
+}
+#info {
+    font-size: 18px;
+    margin-left: 20px;
 }
