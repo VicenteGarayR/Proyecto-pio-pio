@@ -15,13 +15,12 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: 'Arial', sans-serif; /* Fuente sin serifas */
+            font-family: 'Arial', sans-serif;
         }
 
         #title {
             text-align: center;
             margin-bottom: 20px;
-            font-family: 'Arial', sans-serif; /* Fuente sin serifas */
         }
 
         h1 {
@@ -44,22 +43,54 @@
         }
 
         #info {
-            text-align: left;
-            font-size: 18px;
-            margin-left: 20px;
+            width: 30%;
+            height: 600px;
+            overflow-y: scroll; /* Permitir desplazamiento */
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f4f4f4;
         }
 
-        /* Estilos adicionales */
-        .info-box {
+        .bird-slider {
             display: flex;
+            flex-direction: column;
             align-items: center;
         }
 
-        .info-box span {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
+        .bird {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .bird:hover {
+            background-color: #f0f0f0;
+        }
+
+        .bird img {
+            width: 50px;
+            height: 50px;
             margin-right: 10px;
+        }
+
+        .bird-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bird-name {
+            font-weight: bold;
+        }
+
+        /* Audio */
+        audio {
+            display: none;
         }
     </style>
 </head>
@@ -71,21 +102,18 @@
     <div id="container">
         <div id='myMap' aria-label="Mapa de avistamientos de pájaros en Chile" role="img"></div>
         <div id="info">
-            <p>Se han avistado un total de 199462 aves</p>
-            <p>Llegando a visualizar 400 especies</p>
-            <div class="info-box">
-                <span style="background-color: rgba(0, 0, 255, 0.3); border: 1px solid black;"></span>
-                <p>En la región de Magallanes se avistaron 69906 aves</p>
+            <div class="bird-slider" id="birdSlider">
+                <!-- Aquí se cargará el listado de aves con sus fotos e información -->
             </div>
-            <div class="info-box">
-                <span style="background-color: rgba(0, 128, 0, 0.3); border: 1px solid black;"></span>
-                <p>En cambio Valparaíso fue la región de mayor diversidad</p>
-            </div>
-            <p>Llegando a visualizar 198 especies</p>
         </div>
     </div>
 
     <label for="myMap" style="display: none;">Mapa de avistamientos</label>
+
+    <!-- Audios para cada pájaro -->
+    <audio id="birdAudio1" src="audio1.mp3"></audio>
+    <audio id="birdAudio2" src="audio2.mp3"></audio>
+    <!-- Agregar más audios de acuerdo al número de aves -->
 </body>
 </html>
 
