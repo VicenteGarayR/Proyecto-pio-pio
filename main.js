@@ -64,24 +64,25 @@ fetch('datos/data_filtrada_8k.csv')
             { name: "Cordilleran Canastero", image: "fotos/Cordilleran Canastero.jpg", audio: "audios/Cordilleran Canastero.mp3" },
             { name: "Correndera Pipit", image: "fotos/Correndera Pipit.jpg", audio: "audios/Correndera Pipit.wav" },
             { name: "Dolphin Gull", image: "fotos/Dolphin Gull.jpg", audio: "audios/Dolphin Gull.mp3" },
-            { name: "Gray-breasted Seedsnipe", image: "fotos/Grey-breasted Seedsnipe.jpg", audio: "audios/Gray-breasted Seedsnipe.mp3" },
+            { name: "Gray-breasted Seedsnipe", image: "fotos/Grey-breasted Seedsnipe.jpg", audio: "audios/Grey-breasted Seedsnipe.mp3" },
             { name: "Kelp Gull", image: "fotos/Kelp Gull.jpg", audio: "audios/Kelp Gull.wav" },
             { name: "Magellanic Tapaculo", image: "fotos/Magellanic Tapaculo.jpg", audio: "audios/Magellanic Tapaculo.wav" },
             { name: "Oasis Hummingbird", image: "fotos/Oasis Hummungbird.jpg", audio: "audios/Oasis Hummingbird.mp3" },
             { name: "Patagonian Sierra Finch", image: "fotos/Patagonian Sierra Finch.jpg", audio: "audios/Patagonian Sierra Finch.wav" },
             { name: "Sooty Shearwater", image: "fotos/Sooty Shearwater.jpg", audio: "audios/Sooty Shearwater.mp3" },
             { name: "Torrent Duck", image: "fotos/Torrent Duck.jpg", audio: "audios/Torrent Duck.wav" },
-            { name: "Cattle Egret", image: "fotos/Western Cattle Egret.jpg", audio: "audios/Cattle Egret.mp3" }
+            { name: "Cattle Egret", image: "fotos/Western Cattle Egret.jpg", audio: "audios/Western Cattle Egret.mp3" }
         ];
 
         const birdSlider = document.getElementById("birdSlider");
         let selectedBird = null;
+        let currentAudio = null; // Variable para almacenar el audio actual
 
         function createMap(selectedBird) {
             const birdLocations = validData.filter(d => d.species === selectedBird);
             const latitudes = birdLocations.map(d => d.lat);
             const longitudes = birdLocations.map(d => d.lng);
-
+        
             const data = [
                 {
                     type: 'choropleth',
@@ -98,6 +99,7 @@ fetch('datos/data_filtrada_8k.csv')
                     lat: latitudes,
                     hoverinfo: 'text',
                     text: birdLocations.map(() => selectedBird),
+                    showlegend: false,
                     marker: {
                         color: 'red',
                         size: 5,
@@ -105,7 +107,7 @@ fetch('datos/data_filtrada_8k.csv')
                     },
                 },
             ];
-
+        
             const layout = {
                 geo: {
                     scope: 'south america',
@@ -119,7 +121,7 @@ fetch('datos/data_filtrada_8k.csv')
                 margin: { l: 0, r: 0, b: 0, t: 0, pad: 0 },
                 dragmode: false
             };
-
+        
             Plotly.newPlot('myMap', data, layout, { scrollZoom: false, displayModeBar: false });
         }
 
@@ -137,13 +139,25 @@ fetch('datos/data_filtrada_8k.csv')
                 if (selectedBird === bird.name) {
                     selectedBird = null;
                     Plotly.newPlot('myMap', initialData, layout, { scrollZoom: false, displayModeBar: false });
+                    
+                    // Detener el audio actual si se deselecciona el pájaro
+                    if (currentAudio) {
+                        currentAudio.pause();
+                        currentAudio.currentTime = 0;
+                    }
                 } else {
                     selectedBird = bird.name;
                     createMap(bird.name);
                     
-                    // Reproducir el audio correspondiente al pájaro seleccionado
-                    const audio = new Audio(bird.audio);
-                    audio.play().catch(error => {
+                    // Detener el audio actual antes de reproducir uno nuevo
+                    if (currentAudio) {
+                        currentAudio.pause();
+                        currentAudio.currentTime = 0;
+                    }
+
+                    // Reproducir el nuevo audio correspondiente al pájaro seleccionado
+                    currentAudio = new Audio(bird.audio);
+                    currentAudio.play().catch(error => {
                         console.error("Error al reproducir el audio:", error);
                     });
                 }
