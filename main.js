@@ -2,7 +2,7 @@
 fetch('datos/data_filtrada_8k.csv')
     .then(response => response.text())
     .then(csvText => {
-        const rows = csvText.split('\n').slice(1);
+        const rows = csvText.split('\n').slice(1); // Omitir la primera fila (encabezados)
         const birdData = rows.map(row => {
             const columns = row.split(',');
             return {
@@ -58,59 +58,69 @@ fetch('datos/data_filtrada_8k.csv')
         Plotly.newPlot('myMap', initialData, layout, { scrollZoom: false, displayModeBar: false });
 
         const birdsData = [
-            { name: "Black Vulture", image: "fotos/Black Vulture.jpg" },
-            { name: "Chilean Mockingbird", image: "fotos/Chilean Mockingbird.jpg" },
-            { name: "Chilean Swallow", image: "fotos/Chilean swallow.jpg" },
-            { name: "Cordilleran Canastero", image: "fotos/Cordilleran Canastero.jpg" },
-            { name: "Correndera Pipit", image: "fotos/Correndera Pipit.jpg" },
-            { name: "Dolphin Gull", image: "fotos/Dolphin Gull.jpg" },
-            { name: "Gray-breasted Seedsnipe", image: "fotos/Grey-breasted Seedsnipe.jpg" },
-            { name: "Kelp Gull", image: "fotos/Kelp Gull.jpg" },
-            { name: "Magellanic Tapaculo", image: "fotos/Magellanic Tapaculo.jpg" },
-            { name: "Oasis Hummingbird", image: "fotos/Oasis Hummungbird.jpg" },
-            { name: "Patagonian Sierra Finch", image: "fotos/Patagonian Sierra Finch.jpg" },
-            { name: "Sooty Shearwater", image: "fotos/Sooty Shearwater.jpg" },
-            { name: "Torrent Duck", image: "fotos/Torrent Duck.jpg" },
-            { name: "Cattle Egret", image: "fotos/Western Cattle Egret.jpg" }
+            { name: "Black Vulture", image: "fotos/Black Vulture.jpg", audio: "audios/Black Vulture.mp3" },
+            { name: "Chilean Mockingbird", image: "fotos/Chilean Mockingbird.jpg", audio: "audios/Chilean Mockingbird.wav" },
+            { name: "Chilean Swallow", image: "fotos/Chilean swallow.jpg", audio: "audios/Chilean Swallow.wav" },
+            { name: "Cordilleran Canastero", image: "fotos/Cordilleran Canastero.jpg", audio: "audios/Cordilleran Canastero.mp3" },
+            { name: "Correndera Pipit", image: "fotos/Correndera Pipit.jpg", audio: "audios/Correndera Pipit.wav" },
+            { name: "Dolphin Gull", image: "fotos/Dolphin Gull.jpg", audio: "audios/Dolphin Gull.mp3" },
+            { name: "Gray-breasted Seedsnipe", image: "fotos/Grey-breasted Seedsnipe.jpg", audio: "audios/Gray-breasted Seedsnipe.mp3" },
+            { name: "Kelp Gull", image: "fotos/Kelp Gull.jpg", audio: "audios/Kelp Gull.wav" },
+            { name: "Magellanic Tapaculo", image: "fotos/Magellanic Tapaculo.jpg", audio: "audios/Magellanic Tapaculo.wav" },
+            { name: "Oasis Hummingbird", image: "fotos/Oasis Hummungbird.jpg", audio: "audios/Oasis Hummingbird.mp3" },
+            { name: "Patagonian Sierra Finch", image: "fotos/Patagonian Sierra Finch.jpg", audio: "audios/Patagonian Sierra Finch.wav" },
+            { name: "Sooty Shearwater", image: "fotos/Sooty Shearwater.jpg", audio: "audios/Sooty Shearwater.mp3" },
+            { name: "Torrent Duck", image: "fotos/Torrent Duck.jpg", audio: "audios/Torrent Duck.wav" },
+            { name: "Cattle Egret", image: "fotos/Western Cattle Egret.jpg", audio: "audios/Cattle Egret.mp3" }
         ];
 
         const birdSlider = document.getElementById("birdSlider");
         let selectedBird = null;
 
         function createMap(selectedBird) {
-            if (selectedBird) {
-                const birdLocations = validData.filter(d => d.species === selectedBird);
-                const latitudes = birdLocations.map(d => d.lat);
-                const longitudes = birdLocations.map(d => d.lng);
+            const birdLocations = validData.filter(d => d.species === selectedBird);
+            const latitudes = birdLocations.map(d => d.lat);
+            const longitudes = birdLocations.map(d => d.lng);
 
-                const data = [
-                    {
-                        type: 'choropleth',
-                        locations: ['CHL'],
-                        z: [0],
-                        colorscale: [[0, '#ddd'], [1, '#ddd']],
-                        showscale: false,
-                        hoverinfo: 'skip',
+            const data = [
+                {
+                    type: 'choropleth',
+                    locations: ['CHL'],
+                    z: [0],
+                    colorscale: [[0, '#ddd'], [1, '#ddd']],
+                    showscale: false,
+                    hoverinfo: 'skip',
+                },
+                {
+                    type: 'scattergeo',
+                    mode: 'markers',
+                    lon: longitudes,
+                    lat: latitudes,
+                    hoverinfo: 'text',
+                    text: birdLocations.map(() => selectedBird),
+                    marker: {
+                        color: 'red',
+                        size: 5,
+                        line: { color: 'black' }
                     },
-                    {
-                        type: 'scattergeo',
-                        mode: 'markers',
-                        lon: longitudes,
-                        lat: latitudes,
-                        hoverinfo: 'text',
-                        text: birdLocations.map(() => selectedBird),
-                        marker: {
-                            color: 'red',
-                            size: 5,
-                            line: { color: 'black' }
-                        },
-                    },
-                ];
+                },
+            ];
 
-                Plotly.newPlot('myMap', data, layout, { scrollZoom: false, displayModeBar: false });
-            } else {
-                Plotly.newPlot('myMap', initialData, layout, { scrollZoom: false, displayModeBar: false });
-            }
+            const layout = {
+                geo: {
+                    scope: 'south america',
+                    showland: false,
+                    countrywidth: 0,
+                    lonaxis: { range: [-64, -76] },
+                    lataxis: { range: [-18, -59] }
+                },
+                width: 600,
+                height: 800,
+                margin: { l: 0, r: 0, b: 0, t: 0, pad: 0 },
+                dragmode: false
+            };
+
+            Plotly.newPlot('myMap', data, layout, { scrollZoom: false, displayModeBar: false });
         }
 
         birdsData.forEach(bird => {
@@ -124,13 +134,25 @@ fetch('datos/data_filtrada_8k.csv')
             `;
 
             birdElement.addEventListener("click", () => {
-                selectedBird = selectedBird === bird.name ? null : bird.name;
-                createMap(selectedBird);
+                if (selectedBird === bird.name) {
+                    selectedBird = null;
+                    Plotly.newPlot('myMap', initialData, layout, { scrollZoom: false, displayModeBar: false });
+                } else {
+                    selectedBird = bird.name;
+                    createMap(bird.name);
+                    
+                    // Reproducir el audio correspondiente al pájaro seleccionado
+                    const audio = new Audio(bird.audio);
+                    audio.play().catch(error => {
+                        console.error("Error al reproducir el audio:", error);
+                    });
+                }
             });
 
             birdSlider.appendChild(birdElement);
         });
     });
+
 
 
 
