@@ -60,7 +60,7 @@ fetch('datos/data_filtrada_8k.csv')
         const birdsData = [
             { name: "Black Vulture", image: "fotos/Black Vulture.jpg", audio: "audios/Black Vulture.mp3" },
             { name: "Chilean Mockingbird", image: "fotos/Chilean Mockingbird.jpg", audio: "audios/Chilean Mockingbird.wav" },
-            { name: "Chilean Swallow", image: "fotos/Chilean swallow.jpg", audio: "audios/Chilean Swallow.wav" },
+            { name: "Chilean Swallow", image: "fotos/Chilean swallow.jpg", audio: "audios/Chilean swallow.wav" },
             { name: "Cordilleran Canastero", image: "fotos/Cordilleran Canastero.jpg", audio: "audios/Cordilleran Canastero.mp3" },
             { name: "Correndera Pipit", image: "fotos/Correndera Pipit.jpg", audio: "audios/Correndera Pipit.wav" },
             { name: "Dolphin Gull", image: "fotos/Dolphin Gull.jpg", audio: "audios/Dolphin Gull.mp3" },
