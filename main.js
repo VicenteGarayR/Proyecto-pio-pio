@@ -9,6 +9,10 @@ fetch('datos/data_filtrada_8k.csv')
                 lat: parseFloat(columns[8]),
                 lng: parseFloat(columns[9]),
                 species: columns[2],
+                sciName: columns[3],
+                howMany:parseInt(columns[7], 10),
+                region: columns[12],
+                season: columns[16],
             };
         });
 
@@ -31,7 +35,7 @@ fetch('datos/data_filtrada_8k.csv')
                 lon: longitudes,
                 lat: latitudes,
                 hoverinfo: 'text',
-                text: validData.map(d => d.species),
+                text: validData.map(d => `${d.species}: ${d.howMany} avistamientos`),
                 showlegend: false,
                 marker: {
                     color: '#555',
@@ -44,15 +48,19 @@ fetch('datos/data_filtrada_8k.csv')
         const layout = {
             geo: {
                 scope: 'south america',
-                showland: false,
+                showland: true,
+                showocean: true,
+                landcolor: 'lightgreen', 
+                oceancolor: 'lightblue',
                 countrywidth: 0,
-                lonaxis: { range: [-64, -76] },
-                lataxis: { range: [-18, -59] }
+                lonaxis: { range: [-49, -90] },
+                lataxis: { range: [-17, -60] }
             },
-            width: 600,
-            height: 800,
+            width: 500,
+            height: 700,
             margin: { l: 0, r: 0, b: 0, t: 0, pad: 0 },
-            dragmode: false
+            dragmode: false,
+            
         };
 
         Plotly.newPlot('myMap', initialData, layout, { scrollZoom: false, displayModeBar: false });
@@ -74,6 +82,35 @@ fetch('datos/data_filtrada_8k.csv')
             { name: "Cattle Egret", image: "fotos/Western Cattle Egret.jpg", audio: "audios/Western Cattle Egret.mp3" }
         ];
 
+        const summaryData = {};
+
+        birdData.forEach(bird => {
+            const species = bird.species;
+
+            if (!summaryData[species]) {
+                summaryData[species] = {
+                    sciName : bird.sciName,
+                    count: 0,
+                    regionCounts: {},
+                };
+            }
+
+            summaryData[species].count += bird.howMany;
+
+            if (!summaryData[species].regionCounts[bird.region]) {
+                summaryData[species].regionCounts[bird.region] = 0;
+            }
+            summaryData[species].regionCounts[bird.region] += 1;
+        });
+
+        Object.keys(summaryData).forEach(species => {
+            const regions = summaryData[species].regionCounts;
+            const maxRegion = Object.keys(regions).reduce((a, b) => regions[a] > regions[b] ? a : b);
+            summaryData[species].mostSightingsRegion = maxRegion;
+        });
+
+        console.log(summaryData[birdsData[0].name])
+
         const birdSlider = document.getElementById("birdSlider");
         let selectedBird = null;
         let currentAudio = null; // Variable para almacenar el audio actual
@@ -82,7 +119,7 @@ fetch('datos/data_filtrada_8k.csv')
             const birdLocations = validData.filter(d => d.species === selectedBird);
             const latitudes = birdLocations.map(d => d.lat);
             const longitudes = birdLocations.map(d => d.lng);
-        
+            
             const data = [
                 {
                     type: 'choropleth',
@@ -98,10 +135,10 @@ fetch('datos/data_filtrada_8k.csv')
                     lon: longitudes,
                     lat: latitudes,
                     hoverinfo: 'text',
-                    text: birdLocations.map(() => selectedBird),
+                    text: birdLocations.map(d => `${d.howMany} Avistamientos`),
                     showlegend: false,
                     marker: {
-                        color: 'red',
+                        color: 'purple',
                         size: 5,
                         line: { color: 'black' }
                     },
@@ -111,19 +148,46 @@ fetch('datos/data_filtrada_8k.csv')
             const layout = {
                 geo: {
                     scope: 'south america',
-                    showland: false,
+                    showland: true,
+                    showocean:true,
+                    landcolor: 'lightgreen', 
+                    oceancolor: 'skyblue',
                     countrywidth: 0,
-                    lonaxis: { range: [-64, -76] },
-                    lataxis: { range: [-18, -59] }
+                    lonaxis: { range: [-50, -90] },
+                    lataxis: { range: [-17, -59] }
                 },
-                width: 600,
-                height: 800,
+                width: 500,
+                height: 700,
                 margin: { l: 0, r: 0, b: 0, t: 0, pad: 0 },
-                dragmode: false
+                dragmode: false,
+
             };
+
         
             Plotly.newPlot('myMap', data, layout, { scrollZoom: false, displayModeBar: false });
         }
+
+        function changeTitleMap(bird){
+            const selectedBirdText = document.getElementById('selectedBirdText')
+            selectedBirdText.innerHTML = `Avistamientos de la Ave: <br>${bird.name}`
+        }
+
+        function updateBirdInfo(name, imageSrc) {
+            const birdInfo = summaryData[name];
+
+            const description = `
+            <strong>Nombre Común:</strong> ${name}<br>
+            <strong>Nombre Científico:</strong> ${birdInfo.sciName}<br>
+            <strong>Cantidad de Avistamientos:</strong> ${birdInfo.count}<br>
+            <strong>Región con más Avistamientos:</strong> ${birdInfo.mostSightingsRegion}
+            `;
+
+            document.getElementById('selectedBirdText').textContent = name;
+            document.getElementById('birdInfoImage').src = imageSrc;
+            document.getElementById('birdInfoDescription').innerHTML = description;
+
+        }
+
 
         birdsData.forEach(bird => {
             const birdElement = document.createElement("div");
@@ -162,7 +226,13 @@ fetch('datos/data_filtrada_8k.csv')
                     });
                 }
             });
-
+            birdElement.addEventListener('click', () => changeTitleMap(bird));
+            birdElement.addEventListener('click', () => {
+                const birdName = birdElement.querySelector('.bird-name').textContent;
+                const birdImage = birdElement.querySelector('img').src;
+                
+                updateBirdInfo(birdName, birdImage);
+            });
             birdSlider.appendChild(birdElement);
         });
     });
