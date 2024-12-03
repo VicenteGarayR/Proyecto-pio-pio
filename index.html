@@ -11,7 +11,6 @@
         body {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             margin: 0;
             font-family: 'Arial', sans-serif;
@@ -24,10 +23,9 @@
         #title {
             text-align: center;
             width: 100%;
-            background-color:  #78d261;
+            background-color: #78d261;
             color: white;
-            margin-top: 0px;
-            margin-bottom: 10px;
+            margin: 0;
             font-weight: bold;
         }
 
@@ -39,109 +37,54 @@
         #container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             width: 90%;
             max-width: 1200px;
+            margin-top: 20px;
         }
 
-        #myMap {
-            width: 500px;
-            height: 700px;
-            border: 0px solid #ddd;
-            padding: 0px;
-        }
-
+        /* Estilo para el filtro */
         #info {
-            width: 30%;
-            height: 800px;
+            width: 25%;
+            height: auto;
+            max-height: 700px;
             border: 1px solid #ddd;
-            padding: 0px;
+            padding: 0;
             background-color: #f4f4f4;
             box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            max-width: max-content;
+            overflow-y: auto;
         }
 
-        #birdInfo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 250px;
-            height: 400px;
-            border: 3px solid #78d261;
-            background-color: #ffffff;
-            padding: 5px;
-            text-align: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        #birdInfoImageContainer {
-            width: 200px;
-            height: 200px;
-            display:block;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 10 px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            max-width: max-content;
-            position: relative;
-            text-align: left;
-        }
-
-        #birdInfoImage {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        #birdInfoDescription {
-            font-size: 16px;
-            color: #333;
-            margin: 0;
-            padding: 5px;
-        }
-
-        #birdInfoTitle {
+        #titleBirds {
             background-color: #78d261;  
             color: white;  
             text-align: center;            
-            padding: 5px 0;  
-            height: 50px;     
-            width: 100%;
-            box-sizing: border-box;
-            display: flex;
-            align-items: center;  
-            justify-content: center; 
+            padding: 10px;  
+            border-bottom: 3px solid black;
+        }
+
+        #titleBirds h2 {
+            margin: 0;
         }
 
         .bird-slider {
-            display: flex;
-            width: 100%;
-            flex-direction: column;
-            align-items: center;
-            overflow-y: scroll; /* Permitir desplazamiento */
-            flex-grow: 1;
-            box-sizing: border-box;
-        }
+    overflow-y: auto; /* Desplazamiento solo para el deslizador */
+    max-height: 470px; /* Ajusta según el diseño */
+    margin-bottom: 10px; /* Espacio entre el deslizador y el resto */
+    padding: 10px;
+}
 
         .bird {
             display: flex;
             align-items: center;
-            margin: 0px 0;
+            margin: 5px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 8px;
             cursor: pointer;
             background-color: #fff;
             transition: background-color 0.3s ease;
-            flex-grow: 1;
-            box-sizing: border-box;
-            width: 100%;
+            width: 90%;
         }
 
         .bird:hover {
@@ -163,28 +106,14 @@
             font-weight: bold;
         }
 
-        /* Audio */
-        audio {
-            display: none;
+        /* Estilo para el mapa */
+        #figuraMapa {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        #figuraMapa {
-            padding: 0%;
-            margin: 0%;
-        }
-        
-        #titleBirds {
-            background-color: #78d261;  
-            color: white;  
-            text-align: center;            
-            padding: 10px;  
-            width: 100%;
-            border: 3px solid black;   
-            box-sizing: border-box;     
-        }
-        #titleBirds h2 {
-            margin: 0;                     
-        }
         #selectedBirdName {
             background-color: #78d261;
             color: white;
@@ -192,8 +121,69 @@
             font-size: 18px;
             font-weight: bold;
             text-align: center;
-            border: 3px solid #78d261;  
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
         }
+
+        #myMap {
+            width: 500px;
+            height: 700px;
+            border: 1px solid #ddd;
+        }
+
+        /* Estilo para detalles */
+        #birdInfo {
+            width: 20%;
+            max-width: 300px;
+            height: auto;
+            border: 1px solid #ddd;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        #birdInfoTitle {
+            background-color: #78d261;  
+            color: white;  
+            text-align: center;            
+            padding: 5px 0;  
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        #birdInfoImageContainer {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        #birdInfoImage {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        #birdInfoDescription {
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+        }
+        #selectBirdPrompt {
+              background-color: #78d261;
+              color: white;
+              text-align: center;
+              padding: 10px;
+              margin-top: 10px; /* Añade espacio entre el deslizador y esta etiqueta */
+              border-top: 2px solid black;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
     </style>
 </head>
 <body>
@@ -203,34 +193,40 @@
     </div>
 
     <div id="container">
+        <!-- Filtro (izquierda) -->
+        <div id="info">
+          <div id="titleBirds" aria-label="Filtrar por Especie">
+              <h2>Filtro por Especie</h2>
+          </div>
+          <div class="bird-slider" id="birdSlider">
+              <!-- Aquí se cargará el listado de aves con sus fotos e información -->
+          </div>
+          <!-- Colocamos la etiqueta debajo de la deslizador -->
+          <div id="selectBirdPrompt" aria-label="Instrucción para seleccionar un pájaro">
+              <h2>Seleccione el pájaro para escucharlo en la naturaleza</h2>
+          </div>
+      </div>
+
+        <!-- Mapa (centro) -->
         <div id="figuraMapa">
             <div id="selectedBirdName" aria-label="Ave seleccionada">
                 <h2 id="selectedBirdText">Todas las Especies</h2>
             </div>
             <div id='myMap' aria-label="Mapa de avistamientos de pájaros en Chile" role="img"></div>    
         </div>
+
+        <!-- Detalles (derecha) -->
         <div id="birdInfo">
             <div id="birdInfoTitle">
-                <H2>Detalles</H2>
+                <h2>Detalles</h2>
             </div>
             <div id="birdInfoImageContainer">
-                <img id="birdInfoImage" src="" alt="Imagen del ave seleccionada" aria-label="Imagen del ave seleccionada" />
+                <img id="birdInfoImage" src="foto.jpg" alt="Imagen del ave seleccionada" aria-label="Imagen del ave seleccionada" />
             </div>
             <p id="birdInfoDescription">Selecciona una especie para ver más detalles sobre su avistamiento y características.</p>
         </div>
-        <div id="info">
-            <div id="titleBirds" aria-label="Filtrar por Especie">
-                <h2>Filtro por Especie</h2>
-            </div>
-            <div class="bird-slider" id="birdSlider">
-                <!-- Aquí se cargará el listado de aves con sus fotos e información -->
-            </div>
-        
-        </div>
     </div>
-
-    <label for="myMap" style="display: none;">Mapa de avistamientos</label>
-
 </body>
 </html>
+
 

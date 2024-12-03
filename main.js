@@ -116,6 +116,7 @@ fetch('datos/data_filtrada_8k.csv')
         let currentAudio = null; // Variable para almacenar el audio actual
 
         function createMap(selectedBird) {
+            
             const birdLocations = validData.filter(d => d.species === selectedBird);
             const latitudes = birdLocations.map(d => d.lat);
             const longitudes = birdLocations.map(d => d.lng);
